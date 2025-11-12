@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "title": "Sunset Beach Escape",
+        "location": "Hawaii",
+        "price": 1299,
+        "nights": 5,
+        "description": "Relax on white sands and enjoy local cuisine.",
+        "image": "images/beach1.jpg"
+    },
+    {
+        "id": 2, 
+        "title": "Mountain Adventure",
+        "location": "Colorado",
+        "price": 899,
+        "nights": 3, 
+        "description": "Hiking, guided tours, and cozy cabins.", 
+        "image": "images/mountain1.jpg"
+    },
+    {
+        "id": 3, 
+        "title": "City Break", 
+        "location": "New York",
+        "price": 599, 
+        "nights": 2, 
+        "description":"Explore the city highlights on a budget-friendly short trip.",  
+        "image": "images/city1.jpg"
+    }
+]

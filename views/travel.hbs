@@ -1,0 +1,16 @@
+<section id="travel-list">
+    <h1>Available Trips</h1>
+    <div class="trips">
+        {{#each trips}}
+            <article class="trips">
+                <img src="/{{this.image}}" alt="{{this.title}}" width="300" />
+                <h2>{{this.title}}</h2>
+                <p><strong>Location:</strong> {{this.location}}</p>
+                <p><strong>Nights:</strong>{{this.nights}}</p>
+                <p><strong>Price:</strong>${{this.price}}</p>
+                <p>{{this.description}}</p>
+                <a href="#" class="book-btn">Book Now</a>
+            </article>
+        {{/each}}
+    </div>
+</section>
