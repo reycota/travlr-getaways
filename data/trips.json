@@ -6,7 +6,7 @@
         "price": 1299,
         "nights": 5,
         "description": "Relax on white sands and enjoy local cuisine.",
-        "image": "images/beach1.jpg"
+        "image": "images/sea-sound.jpg"
     },
     {
         "id": 2, 
@@ -15,7 +15,7 @@
         "price": 899,
         "nights": 3, 
         "description": "Hiking, guided tours, and cozy cabins.", 
-        "image": "images/mountain1.jpg"
+        "image": "images/mountain.jpg"
     },
     {
         "id": 3, 
@@ -24,6 +24,6 @@
         "price": 599, 
         "nights": 2, 
         "description":"Explore the city highlights on a budget-friendly short trip.",  
-        "image": "images/city1.jpg"
+        "image": "images/NYCity.jpg"
     }
 ]
