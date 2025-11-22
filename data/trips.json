@@ -1,29 +1,32 @@
 [
     {
-        "id": 1,
-        "title": "Sunset Beach Escape",
-        "location": "Hawaii",
-        "price": 1299,
-        "nights": 5,
-        "description": "Relax on white sands and enjoy local cuisine.",
-        "image": "images/sea-sound.jpg"
+        "code": "TRIP1",
+        "name": "Sunset Beach Escape",
+        "length": 5,
+        "start": "2025-01-01T00:00:00.000Z",
+        "resort": "Hawaii",
+        "perPerson": 1299,
+        "image": "images/sea-sound.jpg",
+        "description": "Relax on white sands and enjoy local cuisine."
     },
     {
-        "id": 2, 
-        "title": "Mountain Adventure",
-        "location": "Colorado",
-        "price": 899,
-        "nights": 3, 
-        "description": "Hiking, guided tours, and cozy cabins.", 
-        "image": "images/mountain.jpg"
+        "code": "TRIP2",
+        "name": "Mountain Adventure",
+        "length": 3,
+        "start": "2025-02-01T00:00:00.000Z",
+        "resort": "Colorado",
+        "perPerson": 899,
+        "image": "images/mountain.jpg",
+        "description": "Hiking, guided tours, and cozy cabins."
     },
     {
-        "id": 3, 
-        "title": "City Break", 
-        "location": "New York",
-        "price": 599, 
-        "nights": 2, 
-        "description":"Explore the city highlights on a budget-friendly short trip.",  
-        "image": "images/NYCity.jpg"
+        "code": "TRIP3",
+        "name": "City Break",
+        "length": 2,
+        "start": "2025-03-01T00:00:00.000Z",
+        "resort": "New York",
+        "perPerson": 599,
+        "image": "images/NYCity.jpg",
+        "description": "Explore the city highlights on a budget-friendly short trip."
     }
 ]

@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+require('./app_api/models/db');
+const apiRouter = require('./app_api/routes/index');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const travelerRoutes = require('./app_server/routes/travelerRoutes');
 app.use('/travel', travelerRoutes);
 
+// Routes starting with /api go to new API directory
+app.use('/api', apiRouter);
 
 // Simple test route to verify server response
 app.get('/api/ping', (req, res) => {
