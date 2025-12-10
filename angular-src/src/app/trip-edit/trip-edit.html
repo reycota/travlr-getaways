@@ -1,0 +1,19 @@
+<div *ngIf="trip; else loading">
+  <h2>Edit Trip</h2>
+
+  <form (ngSubmit)="saveTrip()">
+    <label>Code: <input [(ngModel)]="trip.code" name="code" required /></label><br>
+    <label>Name: <input [(ngModel)]="trip.name" name="name" required /></label><br>
+    <label>Length (days): <input type="number" [(ngModel)]="trip.length" name="length" required /></label><br>
+    <label>Start Date: <input [(ngModel)]="trip.start" name="start" required /></label><br>
+    <label>Resort: <input [(ngModel)]="trip.resort" name="resort" required /></label><br>
+    <label>Price per person: <input type="number" [(ngModel)]="trip.perPerson" name="perPerson" required /></label><br>
+    <label>Image URL: <input [(ngModel)]="trip.image" name="image" /></label><br>
+    <label>Description: <textarea [(ngModel)]="trip.description" name="description"></textarea></label><br>
+
+    <button type="submit">Save Changes</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </form>
+</div>
+
+<ng-template #loading>Loading trip...</ng-template>

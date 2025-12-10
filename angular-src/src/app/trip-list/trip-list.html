@@ -1,0 +1,5 @@
+<h2>All Trips</h2>
+
+<div *ngFor="let t of trips$ | async">
+  <app-trip-card [trip]="t"></app-trip-card>
+</div>

@@ -1,0 +1,17 @@
+<div class="card">
+  <img [src]="trip.image" [alt]="trip.name" />
+  <h3>{{ trip.name }}</h3>
+  <p>Code: {{ trip.code }}</p>
+  <p>Length: {{ trip.length }} days</p>
+  <p>Start: {{ trip.start | date:'shortDate' }}</p>
+  <p>Resort: {{ trip.resort }}</p>
+  <p>Price: ${{ trip.perPerson }}</p>
+  <p>{{ trip.description }}</p>
+
+  <div style="margin-top: 15px; text-align: right;">
+    <button (click)="edit()" style="margin-right: 8px;">Edit</button>
+    <button (click)="delete()" style="background:#dc3545; color:white;">
+      Delete
+    </button>
+  </div>
+</div>

@@ -1,16 +1,20 @@
+// app_api/routes/index.js
 const express = require('express');
 const router = express.Router();
 
 const ctrlTrips = require('../controllers/trips');
 
-// GET /api/trips  → all trips
+// /api/trips
 router
   .route('/trips')
-  .get(ctrlTrips.tripsList);
+  .get(ctrlTrips.tripsList)
+  .post(ctrlTrips.tripsCreate);
 
-// GET /api/trips/:tripId → one trip
+// /api/trips/:tripId
 router
   .route('/trips/:tripId')
-  .get(ctrlTrips.tripsReadOne);
+  .get(ctrlTrips.tripsReadOne)
+  .put(ctrlTrips.tripsUpdateOne)
+  .delete(ctrlTrips.tripsDeleteOne);
 
 module.exports = router;

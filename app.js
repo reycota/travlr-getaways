@@ -1,59 +1,58 @@
+// app.js
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+
 require('./app_api/models/db');
 const apiRouter = require('./app_api/routes/index');
+const travelerRoutes = require('./app_server/routes/travelerRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Logging
 app.use(morgan('dev'));
 
-//Set the view engine to Handlebars and views directory
+// Body parsing
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// CORS for Angular SPA (port 4200)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// View engine (Handlebars)
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view options', { layout: 'layouts/main' });
 
-// Serve static HTML files from the "public" folder
+// Static assets
 app.use(express.static(path.join(__dirname, 'public')));
 
-const travelerRoutes = require('./app_server/routes/travelerRoutes');
-app.use('/travel', travelerRoutes);
-
-// Routes starting with /api go to new API directory
+// API routes
 app.use('/api', apiRouter);
 
-// Simple test route to verify server response
-app.get('/api/ping', (req, res) => {
-  res.json({ message: 'Express is serving Travlr static pages correctly!' });
-});
+// Server-rendered travel page (from earlier modules)
+app.use('/travel', travelerRoutes);
 
-//Routing Express to render views/about.hbs using the main.hbs layout and inject "About" into the {{title}} placeholder.
-app.get('/about', (req, res) => {
-  res.render('about', {title: 'About' });
-});
-
-app.get('/contact', (req, res) => {
-  res.render('contact', { title: 'Contact' });
-});
-
-app.get('/rooms', (req, res) => {
-  res.render('rooms', { title: 'Rooms' });
-});
-
-app.get('/meals', (req, res) => {
-  res.render('meals', { title: 'Meals' });
-});
-
-app.get('/news', (req, res) => {
-  res.render('news', { title: 'News' });
-});
-
+// Simple home routes
 app.get('/home', (req, res) => {
   res.render('home', { title: 'Home' });
 });
-
 
 app.get('/', (req, res) => {
   res.redirect('/home');

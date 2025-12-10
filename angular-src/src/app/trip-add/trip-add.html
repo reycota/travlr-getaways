@@ -1,0 +1,70 @@
+<!-- src/app/trip-add/trip-add.html -->
+<h2>Add Trip</h2>
+
+<form (ngSubmit)="addTrip()" #tripForm="ngForm" class="mt-3">
+
+  <div class="mb-2">
+    <label class="form-label">Name</label>
+    <input class="form-control" [(ngModel)]="trip.name" name="name" required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Code</label>
+    <input class="form-control" [(ngModel)]="trip.code" name="code" required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Length (days)</label>
+    <input
+      class="form-control"
+      type="number"
+      [(ngModel)]="trip.length"
+      name="length"
+      required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Start Date</label>
+    <input
+      class="form-control"
+      type="date"
+      [(ngModel)]="trip.start"
+      name="start"
+      required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Resort</label>
+    <input class="form-control" [(ngModel)]="trip.resort" name="resort" required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Price per person</label>
+    <input
+      class="form-control"
+      type="number"
+      [(ngModel)]="trip.perPerson"
+      name="perPerson"
+      required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Image URL</label>
+    <input class="form-control" [(ngModel)]="trip.image" name="image" required>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Description</label>
+    <textarea
+      class="form-control"
+      rows="3"
+      [(ngModel)]="trip.description"
+      name="description"
+      required>
+    </textarea>
+  </div>
+
+  <button class="btn btn-primary mt-2" [disabled]="tripForm.invalid">
+    Add Trip
+  </button>
+</form>
