@@ -19,7 +19,7 @@ export class TripCard {
   ) {}
 
   edit() {
-    this.router.navigate(['/edit', this.trip._id!]);   
+    this.router.navigate(['/edit', this.trip._id]);
   }
 
   delete() {

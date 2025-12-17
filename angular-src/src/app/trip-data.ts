@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { catchError, timeout } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { User } from './models/user';
+import { AuthResponse } from './models/auth-response';
 
 export interface Trip {
   _id?: string;
@@ -19,39 +21,93 @@ export interface Trip {
   providedIn: 'root'
 })
 export class TripData {
-  private apiBaseUrl = 'http://localhost:3000/api/trips';
+
+  private tripsUrl = 'http://localhost:3000/api/trips';
+  private authUrl = 'http://localhost:3000/api';
   private refreshTrigger = new BehaviorSubject<void>(undefined);
 
   constructor(private http: HttpClient) {}
 
-  public getTrips(): Observable<Trip[]> {
+  // -----------------------------
+  // AUTH
+  // -----------------------------
+
+  login(user: User, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.authUrl}/login`, {
+      email: user.email,
+      name: user.name,
+      password
+    });
+  }
+
+  register(user: User, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.authUrl}/register`, {
+      email: user.email,
+      name: user.name,
+      password
+    });
+  }
+
+  // -----------------------------
+  // JWT HEADER
+  // -----------------------------
+
+  private authHeaders() {
+    const token = localStorage.getItem('travlr-token');
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+  }
+
+  // -----------------------------
+  // PUBLIC TRIPS
+  // -----------------------------
+
+  getTrips(): Observable<Trip[]> {
     return this.refreshTrigger.pipe(
-      switchMap(() => this.http.get<Trip[]>(this.apiBaseUrl))
+      switchMap(() => this.http.get<Trip[]>(this.tripsUrl))
     );
   }
 
-  public getTrip(tripId: string): Observable<Trip> {
-    return this.http.get<Trip>(`${this.apiBaseUrl}/${tripId}`).pipe(
-      timeout(5000),
-      catchError(() => {
-        throw new Error('Failed to load trip');
-      })
+  getTrip(tripId: string): Observable<Trip> {
+    return this.http.get<any>(`${this.tripsUrl}/${tripId}`, this.authHeaders()).pipe(
+      map(response => ({
+        ...response,
+        _id: response._id || response.id
+      }) as Trip)
     );
   }
 
-  public addTrip(trip: Trip): Observable<Trip> {
-    return this.http.post<Trip>(this.apiBaseUrl, trip);
+  // -----------------------------
+  // ADMIN TRIPS (JWT REQUIRED)
+  // -----------------------------
+
+  addTrip(trip: Trip): Observable<Trip> {
+    return this.http.post<Trip>(
+      this.tripsUrl,
+      trip,
+      this.authHeaders()
+    );
   }
 
-  public updateTrip(tripId: string, trip: Trip): Observable<Trip> {
-    return this.http.put<Trip>(`${this.apiBaseUrl}/${tripId}`, trip);
+  updateTrip(tripId: string, trip: Trip): Observable<Trip> {
+    return this.http.put<Trip>(
+      `${this.tripsUrl}/${tripId}`,
+      trip,
+      this.authHeaders()
+    );
   }
 
-  public deleteTrip(tripId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiBaseUrl}/${tripId}`);
+  deleteTrip(tripId: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.tripsUrl}/${tripId}`,
+      this.authHeaders()
+    );
   }
 
-  public triggerRefresh(): void {
+  triggerRefresh(): void {
     this.refreshTrigger.next();
   }
 }

@@ -1,5 +1,5 @@
 <div class="card">
-  <img [src]="trip.image" [alt]="trip.name" />
+  <img [src]="'http://localhost:3000/images/' + trip.image" [alt]="trip.name" />
   <h3>{{ trip.name }}</h3>
   <p>Code: {{ trip.code }}</p>
   <p>Length: {{ trip.length }} days</p>

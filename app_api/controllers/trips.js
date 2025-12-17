@@ -1,8 +1,7 @@
-// app_api/controllers/trips.js
 const mongoose = require('mongoose');
 const Trip = mongoose.model('trips');
 
-// GET /api/trips  → all trips
+// GET /api/trips → all trips
 const tripsList = async (req, res) => {
   try {
     const trips = await Trip.find().exec();
@@ -12,13 +11,10 @@ const tripsList = async (req, res) => {
   }
 };
 
-// GET /api/trips/:tripId  → one trip
+// GET /api/trips/:tripId → one trip (BY _id)
 const tripsReadOne = async (req, res) => {
   try {
     const { tripId } = req.params;
-    if (!tripId) {
-      return res.status(400).json({ message: 'tripId parameter is required' });
-    }
 
     const trip = await Trip.findById(tripId).exec();
     if (!trip) {
@@ -31,31 +27,10 @@ const tripsReadOne = async (req, res) => {
   }
 };
 
-// POST /api/trips  → create a new trip
+// POST /api/trips → create
 const tripsCreate = async (req, res) => {
   try {
-    const {
-      code,
-      name,
-      length,
-      start,
-      resort,
-      perPerson,
-      image,
-      description
-    } = req.body;
-
-    const trip = new Trip({
-      code,
-      name,
-      length,
-      start,
-      resort,
-      perPerson,
-      image,
-      description
-    });
-
+    const trip = new Trip(req.body);
     const saved = await trip.save();
     res.status(201).json(saved);
   } catch (err) {
@@ -63,54 +38,29 @@ const tripsCreate = async (req, res) => {
   }
 };
 
-// PUT /api/trips/:tripId  → update an existing trip
+// PUT /api/trips/:tripId → update (BY _id)
 const tripsUpdateOne = async (req, res) => {
   try {
     const { tripId } = req.params;
-    if (!tripId) {
-      return res.status(400).json({ message: 'tripId parameter is required' });
-    }
 
     const trip = await Trip.findById(tripId).exec();
     if (!trip) {
       return res.status(404).json({ message: 'Trip not found' });
     }
 
-    const {
-      code,
-      name,
-      length,
-      start,
-      resort,
-      perPerson,
-      image,
-      description
-    } = req.body;
-
-    trip.code = code;
-    trip.name = name;
-    trip.length = length;
-    trip.start = start;
-    trip.resort = resort;
-    trip.perPerson = perPerson;
-    trip.image = image;
-    trip.description = description;
-
+    Object.assign(trip, req.body);
     const updated = await trip.save();
+
     res.status(200).json(updated);
   } catch (err) {
     res.status(400).json({ message: 'Error updating trip', error: err });
   }
 };
 
-// DELETE /api/trips/:tripId  → optional (nice to have)
+// DELETE /api/trips/:tripId → delete (BY _id)
 const tripsDeleteOne = async (req, res) => {
   try {
     const { tripId } = req.params;
-    if (!tripId) {
-      return res.status(400).json({ message: 'tripId parameter is required' });
-    }
-
     await Trip.findByIdAndDelete(tripId).exec();
     res.status(204).send();
   } catch (err) {
